@@ -1,12 +1,12 @@
 const express=require( "express")
-const {isAuthenticatedUser}=require('../middleware/authandicate');
-const { neworder, getSingleorder, myOrder, updateOrder, orderDelete }=require("../controller/ordercontroller");
+const {isAuthenticatedUser,authorizeRoles}=require('../middleware/authandicate');
+const { neworder, getSingleorder, myOrder, updateOrder, orderDelete,Adminorder }=require("../controller/ordercontroller");
 const router=express.Router()
 
 //order route
 router.route('/order/new').post(isAuthenticatedUser,neworder)
 router.route('/order/:id').get(isAuthenticatedUser,getSingleorder)
-router.route('/order/myorders/:id').egt(isAuthenticatedUser,myOrder)
+router.route('/order/myorders/:id').get(isAuthenticatedUser,myOrder)
 
 //admin route
 router.route('/admin/order').get(isAuthenticatedUser,authorizeRoles('admin'),Adminorder)

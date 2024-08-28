@@ -36,10 +36,13 @@ const userSchema =new mongoose.Schema({
     }
 })
 userSchema.pre('save',async function(next){
+    if(!this.isModified('password')){
+        next()
+    }
     this.password = await bcrypt.hash(this.password,15)
 })
 userSchema.methods.getnsttoken=function(){
-    nst.sign({id:this.id},process.env.NST_SECRET,{
+    return nst.sign({id:this.id},process.env.NST_SECRET,{
         expiresIn:process.env.NST_EXPIRES_TIMER
     })
 }

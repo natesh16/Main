@@ -64,7 +64,7 @@ const productmodule=new mongoos.Schema({
     reviews: [
         {
             user:{
-                type:String,
+                type: mongoos.SchemaTypes.ObjectId,
                 ref: 'User'
             },
             rating: {

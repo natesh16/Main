@@ -7,7 +7,10 @@ var _require = require("../controller/prodectcontroller"),
     newproduct = _require.newproduct,
     getSingleProduct = _require.getSingleProduct,
     updateproduct = _require.updateproduct,
-    deleteproduct = _require.deleteproduct;
+    deleteproduct = _require.deleteproduct,
+    CreateProductreview = _require.CreateProductreview,
+    getproductreviews = _require.getproductreviews,
+    deletereview = _require.deletereview;
 
 var router = express.Router();
 
@@ -18,5 +21,9 @@ var _require2 = require('../middleware/authandicate'),
 router.route('/products/newproduct').post(isAuthenticatedUser, authorizeRoles('admin'), newproduct);
 router.route('/products/:id').get(getSingleProduct).put(updateproduct)["delete"](deleteproduct); //Adime Route
 
-router.route('/products').get(isAuthenticatedUser, getProduct);
+router.route('/products').get(isAuthenticatedUser, getProduct); //route for user review
+
+router.route('/review').put(isAuthenticatedUser, CreateProductreview);
+router.route('/getproductreview').get(isAuthenticatedUser, getproductreviews);
+router.route('/deleteproductreview')["delete"](isAuthenticatedUser, deletereview);
 module.exports = router;

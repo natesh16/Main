@@ -1,10 +1,10 @@
 const catchAsyncerror=require('../middleware/catchAsyncerror')
 const Order=require("../model/ordermodels");
-const product=require("../model/productmodels");
+const product=require("../model/productmodles");
 const ErrorHandler = require('../utils/errorehandeler');
 
 //Create new order =/oder/createneworder 
-exports.neworder=catchAsyncerro(async(req,res,next)=>{
+exports.neworder=catchAsyncerror(async(req,res,next)=>{
     const {
         shippingInfo,
         ordeItems,
