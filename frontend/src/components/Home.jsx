@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from "../actions/productsAction";
 import Loader from "./layouts/Loader";
 import { toast } from "react-toastify";
-import Pagination from'react-js-pagination'
+import Pagination from 'react-js-pagination'
 
 export default function Home(){
-    const { products,loading,error,productCount } =useSelector((state)=>state.productsState)
+    const { products,loading,error,productsCount,resPerPage } =useSelector((state)=>state.productsState)
     const [ CurrentPage,SetCurrentPage ]=useState(1)
 
     const SetcurrentpageNo=(pageNo)=>{
@@ -36,13 +36,14 @@ const dispach=useDispatch()
                         ))}
                     </div>
                     </section>
-                    <div className=" d-flex justify-content-center mt-5">
-                        <Pagination
-                        activePage={CurrentPage}
-                        onChage={SetcurrentpageNo}
-                        totelItemCount
-                        />
-                    </div>
+                        <div className=" d-flex justify-content-center mt-5">
+                            <Pagination
+                                activePage={CurrentPage}
+                                onChage={SetcurrentpageNo}
+                                totlaItemsCount={productsCount}
+                                ItemsCountPerPage={resPerPage}
+                            />
+                        </div>
                 </Fragment>
                 }
         </Fragment>
