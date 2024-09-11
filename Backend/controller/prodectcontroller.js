@@ -8,10 +8,12 @@ const APIfeature =require('../utils/APIfeature');
 exports.getProduct =catchAsyncError( async (req, res, next) => {
     const resPerPage =4
     const apifeature =new APIfeature(Product.find(),req.query).search().filter().paginate(resPerPage);
+    const totelItemCount=await Product.countDocuments({})
     const products = await apifeature.query;
     res.status(200).json({
         succes: true,
-        count: products.length,
+        count:totelItemCount,
+        resPerPage,
         products
     })
 })

@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 export default function product({ product }) {
     return (
         <div className="col-sm-12 col-md-6 col-lg-3 my-3  h-[100%]">
@@ -8,7 +9,7 @@ export default function product({ product }) {
                 />
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">
-                        <a href="">{product.name}</a>
+                        <Link to={`/product/${product._id}`}>{product.name}</Link>
                     </h5>
                     <div className="ratings mt-auto">
                         <div className="rating-outer">
@@ -17,7 +18,7 @@ export default function product({ product }) {
                         <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
                     </div>
                     <p className="card-text">${product.price}</p>
-                    <a href="#" id="view_btn" className="btn btn-block">View Details</a>
+                    <Link to={`/product/${product._id}`} id="view_btn" className="btn btn-block">View Details</Link>
                 </div>
             </div>
         </div>
