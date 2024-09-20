@@ -3,6 +3,7 @@ class APIFeatures {
         this.query = query;
         this.queryStr = queryStr;
     }
+
     search(){
        let keyword =  this.queryStr.keyword ? {
             name: {
@@ -24,11 +25,13 @@ class APIFeatures {
         this.query.find(JSON.parse(queryStr));
         return this;
     }
+
     paginate(resPerPage) {
         const currentpage=Number(this.queryStr.page)||1;
         const skip = resPerPage * (currentpage -1)
         this.query.limit(resPerPage).skip(skip)
         return this
     }
+    
 }
 module.exports = APIFeatures;

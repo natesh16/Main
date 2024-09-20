@@ -1,7 +1,7 @@
-const Product = require('../model/productmodles');
-const ErrorHandler = require('../utils/errorehandeler');
-const catchAsyncError = require('../middleware/catchAsyncerror');
-const APIfeature =require('../utils/APIfeature');
+const Product = require('../model/productmodles')
+const ErrorHandler = require('../utils/errorehandeler')
+const catchAsyncError = require('../middleware/catchAsyncerror')
+const APIfeature =require('../utils/APIfeature')
 
 //search opertion
 //GET REQUEST FOR GETTING ALL THE PRODUCTS {{BASE_URL}}/api/v1/products 

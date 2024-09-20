@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { productFail, productRequest, productSuccess } from '../components/slices/productSlices'
+// import { productFail, productRequest, productSuccess } from '../components/slices/productSlices'
+import { productFail, productRequest, productSuccess } from '../slices/productSlices'
 export const getProduct=id=>async(dispach)=>{
     try {
         dispach(productRequest())

@@ -1,13 +1,16 @@
 import { Fragment, useEffect, useState } from "react";
-import Metadata from "./layouts/MetaDatas";
-import  Product  from './products/Product'
+import Metadata from ".././layouts/MetaDatas";
+import  Product  from '../products/Product'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from "./actions/productsAction";
-import Loader from "./layouts/Loader";
+// import { getProducts } from "../actions/productAction";
+import { getProducts } from "../actions/productsAction";
+import Loader from ".././layouts/Loader";
 import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination'
+import { useParams } from "react-router-dom";
 
-export default function Home(){
+export default function ProductSearch(){
+    const {keyword}=useParams;
     const dispach=useDispatch()
     const { products,loading,error,productsCount,resPerPage } =useSelector((state)=>state.productsState)
     const [ CurrentPage,SetCurrentPage ]=useState(1)
@@ -28,7 +31,7 @@ export default function Home(){
             {loading ? <Loader/> :
             <Fragment>
                 <Metadata title={"Buy Your best"}/>
-                    <h1 id="products_heading">Latest Products</h1>
+                    <h1 id="products_heading">Search Product</h1>
                     <section id="products" className="container h-100 mt-5">
                     <div className="row h-100">
                         {products && products.map(product=>(

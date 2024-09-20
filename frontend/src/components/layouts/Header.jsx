@@ -1,27 +1,16 @@
+import Search from "./Search";
 
 export default function Headers(){
     return(
     <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <img width="150px" src="/images/logo.png" />
+            <img width="150px" src="/images/logo.png" alt="bgimage" />
           </div>
         </div>
   
         <div className="col-12 col-md-6 mt-2 mt-md-0">
-          <div className="input-group">
-            <input
-              type="text"
-              id="search_field"
-              className="form-control"
-              placeholder="Enter Product Name ..."
-            />
-            <div className="input-group-append">
-              <button id="search_btn" className="btn">
-                <i className="fa fa-search" aria-hidden="true">f</i>
-              </button>
-            </div>
-          </div>
+         <Search/>
         </div>
   
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">

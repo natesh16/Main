@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { getProduct } from "../../actions/productAction";
+import { getProduct } from "../actions/productAction";
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Carousel } from "react-bootstrap";
