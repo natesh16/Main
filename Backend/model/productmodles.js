@@ -33,7 +33,7 @@ const productmodule=new mongoos.Schema({
         enum: {
             values: [
                 'Electronics',
-                'Mobile Phones',
+                 'Mobile Phones',
                 'Laptops',
                 'Accessories',
                 'Headphones',
@@ -50,7 +50,7 @@ const productmodule=new mongoos.Schema({
     },
     seller: {
         type: String,
-        required: [true, "Please enter product seller"]
+        required: [true, "Please enter seller details"]
     },
     stock: {
         type: Number,

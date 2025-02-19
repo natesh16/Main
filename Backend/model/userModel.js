@@ -18,7 +18,7 @@ const userSchema =new mongoose.Schema({
     password:{
         type:String,
         required:true,
-        maxlength:[16,"password length exceed 6 characters"],
+        maxlength:[16,"password length exceed 16 characters"],
         select:false
     },
     avatar:{
@@ -50,10 +50,10 @@ userSchema.methods.isValidpassword=async function(enteredpassword){
     return await bcrypt.compare(enteredpassword,this.password);
 }
 
-userSchema.methods.Confirmpassword=async function(newpassword,confirmpassword){
+userSchema.methods.confirmPassword =async function(newpassword,confirmpassword){
     if(newpassword===confirmpassword){
         const newpassword=this.password
-        this.password= await bcrypt.hash(this.password,15)
+        this.password= await bcrypt.hash(newpassword,15)
     }
     const message="Entered password are not matching"
     return message;

@@ -2,7 +2,7 @@ const express =require("express");
 const { getProduct, newproduct, getSingleProduct,updateproduct,deleteproduct, CreateProductreview, getproductreviews, deletereview } = require("../controller/prodectcontroller");
 const router =express.Router();
 const {isAuthenticatedUser,authorizeRoles}=require('../middleware/authandicate')
-router.route('/products/newproduct').post(isAuthenticatedUser,authorizeRoles('admin'),newproduct)
+router.route('/product/newproduct').post(isAuthenticatedUser,authorizeRoles('admin'),newproduct)
 router.route('/product/:id')
                             .get(getSingleProduct)
                             .put(updateproduct)

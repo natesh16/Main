@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom'
-export default function product({ product }) {
+export default function product({ product,col }) {
     return (
-        <div className="col-sm-12 col-md-6 col-lg-3 my-3  h-[100%]">
+        <div className={`col-sm-12 col-md-6 col-lg-${col} my-3  h-[100%]`}>
             <div className="card p-3 rounded w-[80px] h-100">
                 <img
-                    className="card-img-top mx-auto"
+                    className="card-img-top mx-auto" alt='img'
                     src={product.images[0].image}
                 />
                 <div className="card-body d-flex flex-column">

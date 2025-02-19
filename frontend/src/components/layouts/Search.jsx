@@ -16,11 +16,10 @@ export default function Search() {
                 type="text"
                 id="search_field"
                 className="form-control"
-                autocomplete="off"
+                // autocomplete="off"
                 onChange={(e)=>setkeyword(e.target.value)}
                 value={keyword}
-                placeholder="Enter Product Name ..."/>
-            
+                placeholder="Enter Product Name ..."/>           
                 <div className="input-group-append">
                     <button id="search_btn" className="btn">
                         <i className="fa fa-search" aria-hidden="true"></i>

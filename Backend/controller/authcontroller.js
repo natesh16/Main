@@ -1,4 +1,6 @@
 const User=require("../model/userModel")
+const bcrypt=require("bcrypt")
+const nodemailer=require('nodemailer')
 const catchAsyncerror=require( "../middleware/catchAsyncerror")
 const ErrorHandler = require("../utils/errorehandeler")
 const sendtoken=require('../utils/nst')
@@ -16,10 +18,14 @@ exports.registerUser= catchAsyncerror(async(req,res,next)=>{
 exports.LoginUser=catchAsyncerror(async(req,res,next)=>{
     const {email,password}=req.body
     if( !email || !password){
-        return next(new ErrorHandler("Please Enter the Valid Email or Password"))
+        return next(new ErrorHandler("Please Enter the Valid Email or Password",400))
     }
     const user = await User.findOne({email}).select("+password");
-    if(await !user.isValidpassword(password)){
+    if(!user){
+        return next(new ErrorHandler("Please Enter the Valid Email or password",400))
+    }
+
+    if(!await user.isValidpassword(password)){
         return next(new ErrorHandler("Invalid Email OR Password",400))
     }
     sendtoken(user,200,res)
@@ -46,14 +52,14 @@ exports.ressetToken=catchAsyncerror(async(req,res,next)=>{
     }
     const token=Math.random().toString(36).slice(-8)
     user.resetpasswordToken=token
-    user.resetpasswordTokenExpie=Date()*3600000
+    user.resetpasswordExpires=Date()*3600000
     await user.save()
     console.log(token)
     const transporters=nodemailer.createTransport({
         service:"gmail",
         auth:{
             user:"natesh0917@gmail.com",
-            pass:"cips xmsa jikk ejin"
+            pass:"clyw qzgv rtrs amcv"
         }
     })
     
@@ -69,37 +75,50 @@ exports.ressetToken=catchAsyncerror(async(req,res,next)=>{
                 message:"somethink went wrong! try again"
             })
         }
-        res.status(200).json({
+        res.status(200).cookie("resettoken",token).json({
             message:`mail has been send to the email` +info.response
         })
     })
 })
 
+//resetpassword
 exports.resetpassword=catchAsyncerror(async(req,res,next)=>{
     const {token}=req.params
-    const {Newpassword}=req.body
-    const {Confirmpassword}=req.body
+    const {newpassword}=req.body
+    const {confirmpassword}=req.body
     const user=await User.findOne({
         resetpasswordToken:token,
         resetpasswordExpires:{ $gt : Date.now()}
     })
-    const password= user.Confirmpassword(Newpassword,Confirmpassword)
-    res.status(200).json({
-        message:`new password updated to ${password}`,
-    })
-    
-    // const user=await User.findOne({
-    //     resetpasswordToken:token,
-    //     resetpasswordExpires:{ $gt : Date.now()}
-    // })
-    // if(!user){
-    //     return res.status(400).json({message:"Invalid user data"})
-    // }
-    // const hashpassword= await bcrypt.hash(password,10)
-    // user.password=hashpassword
-    // user.resetpasswordExpires=null,
-    // user.resetpasswordToken=null,
+    if(!user){
+        return res.status(400).json({message:"Invalid user data"})
+    }
+    if(newpassword===confirmpassword){
+        const hashpassword= await bcrypt.hash(newpassword,15)
+        user.password=hashpassword
+        user.resetpasswordExpires=null,
+        user.resetpasswordToken=null
+        await user.save()
+        res.status(200).json({
+            success:true,
+            message:"new password updated",
+            password:hashpassword
+        })
+    }
+    const message="Entered password are not matching"
+    return message;
 })
+// const hashpassword= await bcrypt.hash(password,10)
+// const hashpassword= await bcrypt.hash(password,10)
+// user.password=hashpassword,
+// user.resetpasswordExpires=null,
+// user.resetpasswordToken=null,
+// await user.save()
+
+// res.status(200).json({
+//     message:"new password updated"
+// })    
+
 
 //get user profile
 exports.getuserprofile=catchAsyncerror(async(req,res,next)=>{
@@ -113,14 +132,13 @@ exports.getuserprofile=catchAsyncerror(async(req,res,next)=>{
 
 //change password
 exports.changepassword=catchAsyncerror(async(req,res,next)=>{
-    const { currentpassword , Newpassword }=req.body
+    const { currentpassword , newpassword }=req.body
     const user =await User.findById(req.user.id).select("+password")
     
     //check old password
     if(!await user.isValidpassword(req.body.currentpassword)){
         return next(ErrorHandler("Password is incorrect",401))
     }
-
     //assigning new password
     user.password= req.body.Newpassword;
     await user.save();

@@ -8,7 +8,8 @@ const { registerUser,
         getuserDatas,
         getuser,
         Userupdate,
-        deleteuser
+        deleteuser,
+        resetpassword
     } = require("../controller/authcontroller");
 const express=require('express');
 const {isAuthenticatedUser,authorizeRoles}=require('../middleware/authandicate')
@@ -19,6 +20,7 @@ router.route('/register').post(registerUser)
 router.route('/login').get(LoginUser)
 router.route('/logout').get(logoutuser)
 router.route('/ressetToken').post(ressetToken)
+router.route('/resetpassword/:token').post(resetpassword)
 router.route("/myprofile").get(isAuthenticatedUser,getuserprofile)
 router.route("/chagepassword").put(isAuthenticatedUser,changepassword)
 router.route("/updateUserdate").put(isAuthenticatedUser,updateProfile)
@@ -30,4 +32,5 @@ router.route('/admin/userupdate/:id').put(isAuthenticatedUser,authorizeRoles('ad
 router.route('/admin/userdata/:id').delete(isAuthenticatedUser,authorizeRoles('admin'),deleteuser)
 
 
-module.exports=router; 
+module.exports=router;
+

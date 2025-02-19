@@ -9,7 +9,7 @@
     "start": "concurrently \"npm run server\" \"npm run client\" ",
     "dev": "set NODE_ENV=development&&nodemon backend/server.js",
     "prod": "set NODE_ENV=production&&nodemon backend/server.js",
-    "seeded": "node Backend/utils/seeder.js"
+    "seeder": "node Backend/utils/seeder.js"
   },
   "keywords": [],
   "author": "Natesh",
@@ -24,6 +24,7 @@
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.6",
+    "nodemailer": "^6.9.16",
     "npm": "^10.8.3",
     "react-bootstrap": "^1.6.8",
     "validator": "^13.11.0"

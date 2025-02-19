@@ -18,8 +18,8 @@ const App = () => {
             <ToastContainer theme='dark'/>
               <Routes>
                 <Route path='/' element={<Home/>}/>
-                <Route path='/search/:keyword' element={<ProductSearch/>}/>
                 <Route path='/product/:id' element={<ProductDetails/>}/>
+                <Route path='/search/:keyword' element={<ProductSearch/>}/>
               </Routes>
           <Footer/>
       </HelmetProvider>

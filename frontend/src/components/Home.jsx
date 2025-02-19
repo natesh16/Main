@@ -2,26 +2,22 @@ import { Fragment, useEffect, useState } from "react";
 import Metadata from "./layouts/MetaDatas";
 import  Product  from './products/Product'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from "./actions/productsAction";
+import { getProducts } from "../actions/productsAction";
 import Loader from "./layouts/Loader";
 import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination'
-
 export default function Home(){
     const dispach=useDispatch()
     const { products,loading,error,productsCount,resPerPage } =useSelector((state)=>state.productsState)
     const [ CurrentPage,SetCurrentPage ]=useState(1)
-
     const SetcurrentpageNo=(pageNo)=>{
         SetCurrentPage(pageNo)
     }
-
-
     useEffect(()=>{
         if(error){
            return toast.success(error)
         }
-        dispach(getProducts(CurrentPage))
+        dispach(getProducts(null,null,CurrentPage))
     },[error,dispach,CurrentPage])
     return(
         <Fragment>
@@ -32,7 +28,7 @@ export default function Home(){
                     <section id="products" className="container h-100 mt-5">
                     <div className="row h-100">
                         {products && products.map(product=>(
-                           <Product key={product._id} product={product}/>
+                           <Product col={3} key={product._id} product={product}/>
                         ))}
                     </div>
                     </section>

@@ -6,7 +6,7 @@ const APIfeature =require('../utils/APIfeature')
 //search opertion
 //GET REQUEST FOR GETTING ALL THE PRODUCTS {{BASE_URL}}/api/v1/products 
 exports.getProduct =catchAsyncError( async (req, res, next) => {
-    const resPerPage =3
+    const resPerPage =4
     const apifeature =new APIfeature(Product.find(),req.query).search().filter().paginate(resPerPage);
     const products = await apifeature.query;
     const totelProductCount=await Product.countDocuments({})

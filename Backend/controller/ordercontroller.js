@@ -13,7 +13,7 @@ exports.neworder=catchAsyncerror(async(req,res,next)=>{
         shippingprice,
         totalPrice,
         paymentInfo
-    }=req.body;    
+    }=req.body;     
     const order=await Order.create({
         shippingInfo,
         ordeItems,

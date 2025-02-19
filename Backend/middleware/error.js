@@ -15,7 +15,7 @@ module.exports = (err, req, res, next) =>{
         let error = new ErrorHandler(message);
 
         //Validation Error
-        if(err.name == "ValidationError") {
+        if(err.name=="ValidationError") {
             message = Object.values(err.errors).map(value => value.message)
             error = new ErrorHandler(message)
         }
