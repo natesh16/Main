@@ -6,4 +6,10 @@ export default function Metadata({title}){
             <title>{`${title} -Nscart`}</title>
         </Helmet>
     )
+
+
+
+
+
+    
 }

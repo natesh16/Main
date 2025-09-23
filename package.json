@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "caniuse-lite": "^1.0.30001743",
     "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
@@ -27,6 +28,10 @@
     "nodemailer": "^6.9.16",
     "npm": "^10.8.3",
     "react-bootstrap": "^1.6.8",
+    "react-helmet-async": "^2.0.5",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
