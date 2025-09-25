@@ -59,7 +59,7 @@ exports.ressetToken=catchAsyncerror(async(req,res,next)=>{
         service:"gmail",
         auth:{
             user:"natesh0917@gmail.com",
-            pass:"clyw qzgv rtrs amcv"
+            pass:"dzqj vyxg akvg chwy"
         }
     })
     

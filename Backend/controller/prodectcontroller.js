@@ -102,7 +102,7 @@ exports.CreateProductreview=catchAsyncError(async(req,res,next)=>{
     }else{
         //creating the review details
         product.reviews.push(review)
-        product.numOfReviews=product.reviews.length()
+        product.numOfReviews=product.reviews.length
     }
     //find the average of product 
         product.ratings = product.reviews.reduce((acc,review)=>{
@@ -117,41 +117,48 @@ exports.CreateProductreview=catchAsyncError(async(req,res,next)=>{
         })
     })
 
-//get Reviews -api/v1/reviews ?id={productId}
-exports.getproductreviews=catchAsyncError(async(req,res,next)=>{
-    const product= await Product.findById(req,query,id)
+// Get Product Reviews - api/v1/reviews?id={productId}
+exports.getProductReviews = catchAsyncError(async (req, res, next) => {
+    const product = await Product.findById(req.query.id);
+
+    if (!product) {
+        return next(new ErrorHandler('Product not found', 404));
+    }
 
     res.status(200).json({
-        sucess:true,
-        message:"product review",
-        product
-    })
+        success: true,
+        reviews: product.reviews
+    });
 })
+// Ensure you have your Product model imported at the top of the file
+// e.g., const Product = require('../models/productModel');
 
-//delete review
-exports.deletereview=catchAsyncError(async(req,res,next)=>{
-    const product=catchAsyncError(async(req,res,next)=>{
-        //filiter the reviews which does match the deleting review id
-        const review= product.reviews.filer(review=>{
-            return review._id.toString() !== req.query.id.toString()
-        });
-        //number of reviews 
-        const numOfReviews =review.length
-        //finding the average of review
-        let ratings=review.reduce((acc,review)=>{
-           return review.rating + acc
-        },0)/ review.length ;
-    ratings=isNaN(ratings)?0:ratings
-    await product.findByIdAndUpdate(req.query.productId,{
-        review,
+exports.deleteReview = catchAsyncError(async (req, res, next) => {
+    const product = await Product.findById(req.query.productId);
+    if (!product) {
+        return next(new ErrorHandler("Product not found", 404)); // Assuming you have an ErrorHandler
+    }
+    const reviews = product.reviews.filter(
+        (rev) => rev._id.toString() !== req.query.id.toString()
+    );
+    let ratings = 0;
+    if (reviews.length > 0) {
+        ratings = reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length;
+    }    
+    const numOfReviews = reviews.length;
+    await Product.findByIdAndUpdate(req.query.productId, {
+        reviews,      // The field name in your schema is likely 'reviews' (plural)
+        ratings,
         numOfReviews,
-        ratings
-    }) 
-    res.status(200).json({
-        success:true,
-        message:"success",
-        review
-    })
-    })
+    }, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
 
-})
+    // 6. Send a success response
+    res.status(200).json({
+        success: true,
+        message: "Review deleted successfully.",
+    });
+});
