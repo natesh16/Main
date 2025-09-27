@@ -38,7 +38,7 @@ exports.getSingleorder=catchAsyncerror(async(req,res,next)=>{
     if(!order){
         return next(new ErrorHandler(`Order not found for this id : ${req.params.id}`))
     }
-    res.statuscode(200).json({
+    res.status(200).json({
         sucess:true,
         message:"Order Deatils given below",
         order
@@ -51,7 +51,7 @@ exports.myOrder=catchAsyncerror(async(req,res,next)=>{
     if(!order){
         return next(new ErrorHandler(`Order not found for this id : ${req.params.id}`))
     }
-    res.statuscode(200).json({
+    res.status(200).json({
         sucess:true,
         message:"Order Deatils given below",
         order

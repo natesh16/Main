@@ -59,5 +59,5 @@ userSchema.methods.confirmPassword =async function(newpassword,confirmpassword){
     return message;
 }
 
-let models= mongoose.model('useer',userSchema);
+let models= mongoose.model('user',userSchema);
 module.exports=models;

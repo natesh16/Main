@@ -4,9 +4,9 @@ const { neworder, getSingleorder, myOrder, updateOrder, orderDelete,Adminorder }
 const router=express.Router()
 
 //order route
-router.route('/order/new').post(isAuthenticatedUser,neworder)
-router.route('/order/:id').get(isAuthenticatedUser,getSingleorder)
-router.route('/order/myorders/:id').get(isAuthenticatedUser,myOrder)
+router.route('/new').post(isAuthenticatedUser,neworder)
+router.route('/:id').get(isAuthenticatedUser,getSingleorder)
+router.route('/myorders/:id').get(isAuthenticatedUser,myOrder)
 
 //admin route
 router.route('/admin/order').get(isAuthenticatedUser,authorizeRoles('admin'),Adminorder)
