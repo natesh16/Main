@@ -5,11 +5,11 @@ const orderSchema=new mongoose.Schema({
             type:String,
             required:[true,"error"]
         },
-        country:{
+        city:{
             type:String,
             required:[true,"error"]
         },
-        city:{
+        country:{
             type:String,
             required:[true,"error"]
         },
@@ -27,13 +27,13 @@ const orderSchema=new mongoose.Schema({
         required:[true,"error"],
         ref:"user"
     },
-    ordeItems:{
+    orderItems:{
         name:{
             type:String,
             required:[true,"error"]
         },
         quantity:{
-            type:String,
+            type:Number,
             required:[true,"error"]
         },
         image:{
@@ -45,7 +45,7 @@ const orderSchema=new mongoose.Schema({
             required:[true,"error"]
         },
         product:{
-            type:mongoose.SchemaTypes.ObjectId,
+            type:mongoose.Schema.ObjectId,
             required:[true,"error"],
             ref:"product"
         },
@@ -75,7 +75,7 @@ const orderSchema=new mongoose.Schema({
     deliveredAt:{
         type:Date
     },
-    Orderstatus:{
+    orderStatus:{
         type:String,
         required:[true,"error"],
         default: "processing"
