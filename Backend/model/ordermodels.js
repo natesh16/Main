@@ -27,29 +27,30 @@ const orderSchema=new mongoose.Schema({
         required:[true,"error"],
         ref:"user"
     },
-    orderItems:{
-        name:{
-            type:String,
-            required:[true,"error"]
+    orderItems: [{
+        name: {
+            type: String,
+            required: true
         },
-        quantity:{
-            type:Number,
-            required:[true,"error"]
+        quantity: {
+            type: Number,
+            required: true
         },
-        image:{
-            type:Number,
-            required:[true,"error"]
+        image: {
+            type: String,
+            required: true
         },
-        price:{
-            type:Number,
-            required:[true,"error"]
+        price: {
+            type: Number,
+            required: true
         },
-        product:{
-            type:mongoose.Schema.ObjectId,
-            required:[true,"error"],
-            ref:"product"
-        },
-    },
+        product: {
+            type: mongoose.SchemaTypes.ObjectId,
+            required: true,
+            ref: 'Product'
+        }
+
+    }],
     itemsPrices:{
         type:Number,
         required: [true,"error"],

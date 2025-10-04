@@ -10,7 +10,7 @@ router.route('/myorders/:id').get(isAuthenticatedUser,myOrder)
 
 //admin route
 router.route('/admin/order').get(isAuthenticatedUser,authorizeRoles('admin'),Adminorder)
-router.route('/admin/updateorder/:id').put(isAuthenticatedUser,authorizeRoles('admin'),updateOrder)
+router.route('/admin/updateorder/:id').patch(isAuthenticatedUser,authorizeRoles('admin'),updateOrder)
 router.route('/admin/deleteorder/:id').delete(isAuthenticatedUser,authorizeRoles('admin'),orderDelete)
 
 module.exports=router

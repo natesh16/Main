@@ -78,38 +78,44 @@ exports.Adminorder=catchAsyncerror(async(req,res,next)=>{
 })
 
 //Admin:update order / order Status -api/v1/order:id
-exports.updateOrder=catchAsyncerror(async(req,res,next)=>{
-    const order=await Order.findById(req.params.id)
-    if(order.orderStatus=="delivered"){
-        return next(new ErrorHandler("Order has been delivered",400))
-    }
-    // updateing the product quantity
-    order.orderItems.forEach(async orderItem=>{
-       await updateStock(orderItem.product,orderItem.quantity)
-    })
-    order.orderStatus = req.body.orderStatus
-    order.deliveredAt=Date.now();
-    // 'await' the save operation to ensure it completes
-   await order.save()
-    res.status(200).json({
-        sucess:true,
-        message:"order updated",
-        order
-    })
-})
-async function updateStock(productId,quantity){
-    const product=await product.findById(productId)
-    product.stock= product.stock - quantity
-   product.save({validateBeforSave:false})
-}
+// The helper function to update stock (CORRECTED)
+async function updateStock(productId, quantity) {
+    // 1. Use the correct Model name (e.g., 'Product')
+    const product = await product.findById(productId);
 
+    if (product) {
+        product.stock = product.stock - quantity;
+        // 2. Await the save operation!
+        await product.save({ validateBeforeSave: false });
+    }
+}
+exports.updateOrder =  catchAsyncerror(async (req, res, next) => {
+    const order = await Order.findById(req.params.id);
+
+    if(order.orderStatus == 'Delivered') {
+        return next(new ErrorHandler('Order has been already delivered!', 400))
+    }
+    //Updating the product stock of each order item
+    order.orderItems.forEach(async orderItem => {
+        await updateStock(orderItem.product, orderItem.quantity)
+    })
+
+    order.orderStatus = req.body.orderStatus;
+    order.deliveredAt = Date.now();
+    await order.save();
+
+    res.status(200).json({
+        success: true
+    })
+    
+});
 //Admin:Order Delete router
 exports.orderDelete=catchAsyncerror(async(req,res,next)=>{
     const order = await Order.findById(req.params.id)
     if(!order){
         return next(new ErrorHandler(`Order has not found on this id ${req.params.id}`,400))
     }
-    await order.remove()
+    await order.remove;
     res.status(200).json({
         sucess:true,
         message:"order has deleted"
